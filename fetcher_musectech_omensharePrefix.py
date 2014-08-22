@@ -17,7 +17,7 @@ else:
 	client.set(mkey, r.content, expire=7200)
 	splitlines = r.content.split('\n')
 
-print('ipv4,feedID,killchain,description,context')
+print('ipv4prefix,feedID,killchain,description,context')
 
 for x in splitlines:
 	x = x.strip()
@@ -26,7 +26,8 @@ for x in splitlines:
 	xsplit = x.split(':')
 	if re.search('[a-z,A-Z]', xsplit[1]): continue
 	if not re.search('\.', xsplit[1]): continue
-	if re.search('\/', xsplit[1]): continue
-	if re.search('\.$', xsplit[1]): continue
+	if re.search('\.$', xsplit[1]):
+		xsplit[1] = xsplit[1] + '0/24'
+	if not re.search('\/', xsplit[1]): continue
 	print("%s,%s,%s,%s,%s" % (xsplit[1], feedID, killchain, 'Musectech hostile IPs',xsplit[2]))
 	
