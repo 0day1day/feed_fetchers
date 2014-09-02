@@ -26,7 +26,7 @@ if r.status_code != requests.codes.ok:
 del r
 
 # Fetch the file
-os.remove(filename)
+if os.path.isfile(filename): os.remove(filename)
 response = requests.get(url)
 with open(filename, 'wb') as out_file:
     shutil.copyfileobj(response.raw, out_file)
@@ -47,4 +47,4 @@ for x in splitlines:
 	xlist = x.split(':')
 	print("%s,%s,%s,%s" % (xlist[0], feedID, killchain, 'OpenNTP IP'))
 	
-os.remove(filename)
+if os.path.isfile(filename): os.remove(filename)
